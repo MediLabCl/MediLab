@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratorio Clínico MediLab</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    header { background-color: #005c99; color: white; padding: 1rem; text-align: center; }
+    header img { max-width: 150px; display: block; margin: 0 auto 1rem; }
+    nav { background-color: #004070; display: flex; justify-content: center; gap: 1rem; padding: 0.5rem 0; }
+    nav a { color: white; text-decoration: none; font-weight: bold; }
+    .hero { background: #e6f2ff; padding: 2rem; text-align: center; }
+    .section { padding: 2rem; max-width: 800px; margin: auto; }
+    .services ul { list-style: none; padding: 0; }
+    .services li { margin-bottom: 0.5rem; }
+    .contact a.button, .results a.button {
+      background-color: #25D366; color: white; padding: 1rem; text-decoration: none;
+      display: inline-block; border-radius: 8px; margin-top: 1rem;
+    }
+    .login-form input {
+      display: block; width: 100%; padding: 0.5rem; margin: 0.5rem 0; border-radius: 5px; border: 1px solid #ccc;
+    }
+    .login-form button {
+      background-color: #005c99; color: white; padding: 0.7rem 1.2rem; border: none;
+      border-radius: 5px; cursor: pointer; margin-top: 1rem;
+    }
+    footer { background-color: #f2f2f2; padding: 1rem; text-align: center; font-size: 0.9rem; }
+    iframe { width: 100%; height: 300px; border: none; }
+  </style>
+  <script>
+    const pacientes = [
+      {
+        codigo: "ABC123",
+        fecha: "2000-01-01",
+        nombre: "Juan Pérez",
+        resultados: [
+          { nombre: "Hemograma Completo", url: "https://tulink.com/hemograma.pdf" },
+          { nombre: "Examen de Orina", url: "https://tulink.com/orina.pdf" }
+        ]
+      },
+      {
+        codigo: "DEF456",
+        fecha: "1990-05-10",
+        nombre: "Ana Rodríguez",
+        resultados: [
+          { nombre: "Química Sanguínea", url: "https://tulink.com/quimica.pdf" }
+        ]
+      },
+      {
+        codigo: "MEDI001",
+        fecha: "1992-07-12",
+        nombre: "Carlos Martínez",
+        resultados: [
+          {
+            nombre: "Informe de Laboratorio (PDF)",
+            url: "https://drive.google.com/uc?export=download&id=1iX7JgjhS_cobdStd-o5h2SsD0f_vuWJK"
+          }
+        ]
+      }
+    ];
+
+    function login(event) {
+      event.preventDefault();
+      const code = document.getElementById("codigo").value.trim();
+      const dob = document.getElementById("fecha").value;
+      const paciente = pacientes.find(p => p.codigo === code && p.fecha === dob);
+
+      if (paciente) {
+        document.getElementById("login-section").style.display = "none";
+        const resultSection = document.getElementById("resultados-section");
+        resultSection.style.display = "block";
+        const lista = resultSection.querySelector("ul");
+        lista.innerHTML = "";
+        paciente.resultados.forEach(r => {
+          const li = document.createElement("li");
+          const a = document.createElement("a");
+          a.href = r.url;
+          a.target = "_blank";
+          a.textContent = r.nombre;
+          li.appendChild(a);
+          lista.appendChild(li);
+        });
+      } else {
+        alert("Código o fecha incorrectos. Inténtalo de nuevo.");
+      }
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <img src="logo.png" alt="Logo MediLab">
+    <h1>Laboratorio Clínico MediLab</h1>
+    <p>¡Tu salud en buenas manos!</p>
+  </header>
+
+  <nav>
+    <a href="#servicios">Servicios</a>
+    <a href="#horarios">Horarios</a>
+    <a href="#contacto">Contacto</a>
+    <a href="#resultados">Resultados</a>
+  </nav>
+
+  <section class="hero">
+    <h2>Análisis clínicos confiables en Chalatenango</h2>
+    <p>Realizamos pruebas de laboratorio con resultados rápidos y seguros.</p>
+  </section>
+
+  <section class="section services" id="servicios">
+    <h3>Servicios</h3>
+    <ul>
+      <li>✓ Hematología</li>
+      <li>✓ Química Sanguínea</li>
+      <li>✓ Uroanálisis</li>
+      <li>✓ Coprología</li>
+      <li>✓ Bacteriología</li>
+      <li>✓ Pruebas Especiales</li>
+    </ul>
+  </section>
+
+  <section class="section" id="horarios">
+    <h3>Horarios de Atención</h3>
+    <p><strong>Lunes a Viernes:</strong> 7:00 am – 9:30 pm</p>
+    <p><strong>Sábado:</strong> 7:00 am – 4:00 pm</p>
+    <p><strong>Domingo:</strong> Solo por emergencia</p>
+  </section>
+
+  <section class="section contact" id="contacto">
+    <h3>Contacto</h3>
+    <p><strong>Teléfono:</strong> 7120-9763</p>
+    <p><strong>Correo:</strong> laboratorioclinicomedilab77@gmail.com</p>
+    <p><strong>Dirección:</strong> 6ta Avenida Sur, Barrio El Calvario, Chalatenango</p>
+
+    <a href="https://wa.me/50371209763" class="button" target="_blank">Agendar por WhatsApp</a>
+
+    <h4>Ubicación:</h4>
+    <iframe src="https://www.google.com/maps?q=6ta+Avenida+Sur,+Barrio+El+Calvario,+Chalatenango&output=embed"></iframe>
+  </section>
+
+  <section class="section results" id="resultados">
+    <div id="login-section">
+      <h3>Consulta tus Resultados</h3>
+      <form class="login-form" onsubmit="login(event)">
+        <label for="codigo">Código de Paciente</label>
+        <input type="text" id="codigo" required>
+        <label for="fecha">Fecha de Nacimiento</label>
+        <input type="date" id="fecha" required>
+        <button type="submit">Ver Resultados</button>
+      </form>
+    </div>
+    <div id="resultados-section" style="display: none;">
+      <h3>Resultados de Laboratorio</h3>
+      <p>A continuación se muestran tus exámenes disponibles:</p>
+      <ul></ul>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Laboratorio Clínico MediLab. Todos los derechos reservados.</p>
+  </footer>
+</body>
+</html>
